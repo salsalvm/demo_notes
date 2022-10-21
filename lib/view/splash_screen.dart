@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mynotes/view/user_list_screen.dart';
+import 'package:mynotes/view/creator_list_screen.dart';
 
 late Size size;
 
@@ -31,7 +31,7 @@ class ScreenSplash extends StatelessWidget {
       const Duration(seconds: 1),
     );
     Get.offAll(
-      const ScreenUserList(),
+      const ScreenCreatorList(),
     );
   }
 }

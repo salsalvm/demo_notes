@@ -1,23 +1,24 @@
 import 'package:get/get.dart';
 import 'package:mynotes/main.dart';
 import 'package:mynotes/model/note_model.dart';
-import 'package:mynotes/view/user_note_screen.dart';
+import 'package:mynotes/view/creator_list_screen.dart';
+import 'package:mynotes/view/creator_note_grid.dart';
 
 class NoteController extends GetxController {
   List<NoteModel> myNotes = <NoteModel>[];
+  List<NoteModel> orgNotes = <NoteModel>[];
 
   int minus = 0;
-  List<int> number = <int>[];
+  List<int> number = <int>[].obs;
   List<String> setNotes = <String>[];
   List<NoteModel> userNotes = <NoteModel>[];
 
-  // -------- add notes ---------
-  Future<void> addNote(NoteModel notes) async {
+  // -------- save notes ---------
+  Future<void> saveNote(NoteModel notes) async {
     int id = await box.add(notes);
     final idNotes = NoteModel(
         name: notes.name, title: notes.title, desc: notes.desc, id: id);
     box.put(id, idNotes);
-    await box.add(idNotes);
 
     getNotes();
     update();
@@ -26,8 +27,13 @@ class NoteController extends GetxController {
 
   getNotes() {
     myNotes.clear();
+    orgNotes.clear();
     box.values.toList();
     myNotes.addAll(box.values);
+    for (var element in myNotes) {
+      orgNotes.add(element);
+    }
+    orgNotes.addAll(box.values);
     getUniqueUser();
     update();
   }
@@ -35,16 +41,19 @@ class NoteController extends GetxController {
 
   Future<void> deleteUser(int id, int index) async {
     box.delete(id);
-    userNotes.removeAt(index);
-    getNotes();
 
+    getNotes();
+    getUniqueUser();
+    Get.offAll(const ScreenCreatorList());
     update();
   }
 
   // -------- view  notes ---------
 
   viewNotes(String userName) async {
-    userNotes = myNotes
+    final redundant = orgNotes.toSet().toList();
+
+    userNotes = redundant
         .toList()
         .where(
           (element) => element.name.toLowerCase().contains(
@@ -52,9 +61,11 @@ class NoteController extends GetxController {
               ),
         )
         .toList();
+
     Get.to(
       ScreenUserNotes(user: userName),
     );
+    for (var i = 0; i < userNotes.length; i++) {}
   }
   // -------- count & notes ---------
 
@@ -68,17 +79,24 @@ class NoteController extends GetxController {
             myNotes[j].name != '') {
           count++;
 
-          // myNotes[j] = NoteModel(name: '', title: '', desc: '');
+          myNotes[j] = NoteModel(name: '', title: '', desc: '');
           minus++;
         }
       }
-      if (count != 0) {
+      // if (myNotes[i].name != '') {
         setNotes.add(myNotes[i].name);
         number.add(count);
-      }
+      // }
     }
 
     update();
+  }
+
+  @override
+  void onReady() {
+    getNotes();
+    getUniqueUser();
+    super.onReady();
   }
 
   @override

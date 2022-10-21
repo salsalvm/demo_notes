@@ -6,12 +6,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:mynotes/model/note_model.dart';
 import 'package:mynotes/view/splash_screen.dart';
 
-final box = Hive.box<NoteModel>('note_box');
+final box = Hive.box<NoteModel>('activities');
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Hive.initFlutter();
   Hive.registerAdapter(NoteModelAdapter());
-  await Hive.openBox<NoteModel>('note_box');
+  await Hive.openBox<NoteModel>('activities');
   runApp(
     const MyNote(),
   );

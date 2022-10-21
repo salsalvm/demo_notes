@@ -4,7 +4,7 @@ import 'package:mynotes/model/note_model.dart';
 import 'package:mynotes/view_model/note_controller.dart';
 import 'package:mynotes/constant/styles.dart';
 import 'package:mynotes/constant/type.dart';
-import 'package:mynotes/view/user_note_screen.dart';
+import 'package:mynotes/view/creator_note_grid.dart';
 import 'package:mynotes/view/splash_screen.dart';
 import 'package:mynotes/view/widgets/custom_text.dart';
 
@@ -65,7 +65,7 @@ class AddNotes extends StatelessWidget {
                     } else {
                       final NoteModel notes =
                           NoteModel(name: name, title: title, desc: desc);
-                      controller.addNote(notes);
+                      controller.saveNote(notes);
                       titleController.clear();
                       descController.clear();
                       nameController.clear();
