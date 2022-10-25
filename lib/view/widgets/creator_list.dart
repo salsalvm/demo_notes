@@ -16,44 +16,46 @@ class CreatorList extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        controller.viewNotes(controller.setNotes[index]);
+        controller.viewNotes(controller.setNotes[index].name);
       },
-      child: Card(
-        shadowColor: Styles.kGrey,
-        shape: RoundedRectangleBorder(
-          borderRadius: Styles.kRadius10,
-        ),
-        child: Padding(
-          padding: const EdgeInsets.all(10.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Icon(
-                Icons.person,
-                size: 30,
-              ),
-              Padding(
-                padding: const EdgeInsets.only(left: 20.0),
-                child: Text(
-                  controller.myNotes[index].name,
-                  style: Styles.customTitle,
+      child: GetBuilder<NoteController>(
+        init: NoteController(),
+        builder: (NoteController ctrl) {
+        return Card(
+          shadowColor: Styles.kGrey,
+          shape: RoundedRectangleBorder(
+            borderRadius: Styles.kRadius10,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.start,
+              children: [
+                const Icon(
+                  Icons.person,
+                  size: 30,
                 ),
-              ),
-              const Spacer(),
-              CircleAvatar(
-                radius: 17,
-                backgroundColor: Styles.kTransparant,
-                child: Obx(
-                  () => Text(
-                    '${controller.number[index]}',
+                Padding(
+                  padding: const EdgeInsets.only(left: 20.0),
+                  child: Text(
+                    controller.myNotes[index].name,
                     style: Styles.customTitle,
                   ),
                 ),
-              ),
-            ],
+                const Spacer(),
+                CircleAvatar(
+                  radius: 17,
+                  backgroundColor: Styles.kTransparant,
+                  child: Text(
+                    '${ctrl.number[index]}',
+                    style: Styles.customTitle,
+                  ),
+                ),
+              ],
+            ),
           ),
-        ),
-      ),
+        );
+      }),
     );
   }
 }

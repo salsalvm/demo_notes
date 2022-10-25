@@ -1,7 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:mynotes/constant/styles.dart';
 import 'package:mynotes/constant/type.dart';
+import 'package:mynotes/main.dart';
 import 'package:mynotes/view/splash_screen.dart';
 import 'package:mynotes/view/widgets/save_notes.dart';
 import 'package:mynotes/view/widgets/creator_list.dart';
@@ -16,6 +19,23 @@ class ScreenCreatorList extends StatelessWidget {
       appBar: AppBar(
         centerTitle: true,
         title: const Text('Users List'),
+        leading: IconButton(
+            onPressed: () {
+              Get.defaultDialog(
+                backgroundColor: Styles.kWhite,
+                buttonColor: Styles.kWhite,
+                middleText: 'Do you Want to clear this box',
+                onConfirm: () {
+                  box.clear();
+                  Get.back();
+                },
+                title: 'Are You Sure',
+                onCancel: () {
+                  Get.back();
+                },
+              );
+            },
+            icon: const Icon(Icons.clear)),
       ),
       body: SafeArea(
         child: Stack(
@@ -26,6 +46,7 @@ class ScreenCreatorList extends StatelessWidget {
               child: GetBuilder<NoteController>(
                 init: NoteController(),
                 builder: (controller) {
+                  controller.myNotes.removeWhere((item) => item.name == '');
                   return controller.setNotes == null
                       ? const Center(
                           child: CircularProgressIndicator(
@@ -48,16 +69,14 @@ class ScreenCreatorList extends StatelessWidget {
                                       child: Padding(
                                         padding: const EdgeInsets.symmetric(
                                             horizontal: 10),
-                                       
-                                          child: CreatorList(
-                                              index: index,
-                                              controller: controller),
-                                       
+                                        child: CreatorList(
+                                            index: index,
+                                            controller: controller),
                                       ),
                                     );
                                   },
-                                  itemCount: controller.myNotes.length -
-                                      controller.minus),
+                                  itemCount: controller.myNotes.length
+                                  ),
                             );
                 },
               ),

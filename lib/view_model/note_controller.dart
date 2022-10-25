@@ -10,7 +10,7 @@ class NoteController extends GetxController {
 
   int minus = 0;
   List<int> number = <int>[].obs;
-  List<String> setNotes = <String>[];
+  List<NoteModel> setNotes = <NoteModel>[];
   List<NoteModel> userNotes = <NoteModel>[];
 
   // -------- save notes ---------
@@ -18,7 +18,7 @@ class NoteController extends GetxController {
     int id = await box.add(notes);
     final idNotes = NoteModel(
         name: notes.name, title: notes.title, desc: notes.desc, id: id);
-    box.put(id, idNotes);
+    await box.put(id, idNotes);
 
     getNotes();
     update();
@@ -80,24 +80,18 @@ class NoteController extends GetxController {
           count++;
 
           myNotes[j] = NoteModel(name: '', title: '', desc: '');
-          minus++;
+          minus = minus + 1;
         }
       }
-      // if (myNotes[i].name != '') {
-        setNotes.add(myNotes[i].name);
+      if (myNotes[i].name != '') {
+        setNotes.add(myNotes[i]);
         number.add(count);
-      // }
+      }
     }
 
     update();
   }
 
-  @override
-  void onReady() {
-    getNotes();
-    getUniqueUser();
-    super.onReady();
-  }
 
   @override
   void onInit() {
