@@ -18,8 +18,9 @@ class NoteController extends GetxController {
     int id = await box.add(notes);
     final idNotes = NoteModel(
         name: notes.name, title: notes.title, desc: notes.desc, id: id);
-    await box.put(id, idNotes);
 
+    await box.put(id, idNotes);
+    getUniqueUser();
     getNotes();
     update();
   }
@@ -65,7 +66,6 @@ class NoteController extends GetxController {
     Get.to(
       ScreenUserNotes(user: userName),
     );
-    for (var i = 0; i < userNotes.length; i++) {}
   }
   // -------- count & notes ---------
 
@@ -85,19 +85,21 @@ class NoteController extends GetxController {
       }
       if (myNotes[i].name != '') {
         setNotes.add(myNotes[i]);
+        // number![c] = count;
+        // c++;
         number.add(count);
+        update();
       }
     }
 
     update();
   }
 
-
   @override
   void onInit() {
     getNotes();
     getUniqueUser();
-
+    getNotes();
     super.onInit();
   }
 }

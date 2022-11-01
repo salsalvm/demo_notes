@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:mynotes/constant/styles.dart';
+import 'package:mynotes/res/components/styles.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:mynotes/model/note_model.dart';
 import 'package:mynotes/view/splash_screen.dart';

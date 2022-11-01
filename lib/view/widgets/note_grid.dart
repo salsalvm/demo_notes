@@ -1,7 +1,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mynotes/constant/styles.dart';
+import 'package:mynotes/res/components/styles.dart';
 import 'package:mynotes/view_model/note_controller.dart';
 
 class NoteGrid extends StatelessWidget {

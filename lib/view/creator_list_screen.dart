@@ -2,8 +2,8 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:mynotes/constant/styles.dart';
-import 'package:mynotes/constant/type.dart';
+import 'package:mynotes/res/components/styles.dart';
+import 'package:mynotes/res/type.dart';
 import 'package:mynotes/main.dart';
 import 'package:mynotes/view/splash_screen.dart';
 import 'package:mynotes/view/widgets/save_notes.dart';

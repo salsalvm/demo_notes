@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-import 'package:mynotes/constant/styles.dart';
+
+import 'package:mynotes/res/components/styles.dart';
 import 'package:mynotes/view_model/note_controller.dart';
 
 class CreatorList extends StatelessWidget {
@@ -18,44 +18,40 @@ class CreatorList extends StatelessWidget {
       onTap: () {
         controller.viewNotes(controller.setNotes[index].name);
       },
-      child: GetBuilder<NoteController>(
-        init: NoteController(),
-        builder: (NoteController ctrl) {
-        return Card(
-          shadowColor: Styles.kGrey,
-          shape: RoundedRectangleBorder(
-            borderRadius: Styles.kRadius10,
+      child: Card(
+        shadowColor: Styles.kGrey,
+        shape: RoundedRectangleBorder(
+          borderRadius: Styles.kRadius10,
+        ),
+        child: Padding(
+          padding: const EdgeInsets.all(10.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const Icon(
+                Icons.person,
+                size: 30,
+              ),
+              Padding(
+                padding: const EdgeInsets.only(left: 20.0),
+                child: Text(
+                  controller.myNotes[index].name,
+                  style: Styles.customTitle,
+                ),
+              ),
+              const Spacer(),
+              CircleAvatar(
+                radius: 17,
+                backgroundColor: Styles.kTransparant,
+                child: Text(
+                  '${controller.number[index]}',
+                  style: Styles.customTitle,
+                ),
+              ),
+            ],
           ),
-          child: Padding(
-            padding: const EdgeInsets.all(10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
-              children: [
-                const Icon(
-                  Icons.person,
-                  size: 30,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(left: 20.0),
-                  child: Text(
-                    controller.myNotes[index].name,
-                    style: Styles.customTitle,
-                  ),
-                ),
-                const Spacer(),
-                CircleAvatar(
-                  radius: 17,
-                  backgroundColor: Styles.kTransparant,
-                  child: Text(
-                    '${ctrl.number[index]}',
-                    style: Styles.customTitle,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        );
-      }),
+        ),
+      ),
     );
   }
 }

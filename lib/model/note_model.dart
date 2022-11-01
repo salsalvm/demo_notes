@@ -11,11 +11,12 @@ class NoteModel {
   final String name;
   @HiveField(3)
   final int id;
-
-  NoteModel({
+@HiveField(4)
+final int count;
+  NoteModel( {
     required this.name,
     required this.title,
     required this.desc,
-    this.id = 0,
+    this.id = 0,this.count=1,
   });
 }
